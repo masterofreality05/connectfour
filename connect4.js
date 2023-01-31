@@ -86,22 +86,23 @@ function findSpotForCol(x) {
   //we want to loop through the rows(y axis values) of each column, to find the first empty cell. or if all empty then the last
   for(let y = 0; y < HEIGHT; y++){
     //we want to check its the furthest unchecked, or last vertical box.
-    if(board[x][y + 1] == true || y == HEIGHT -1){
+    if(board[x][y + 1] == true || y == HEIGHT){
     
         //if board x (column) i (iterable vertical value) using loose equality
         console.log(`board ${x} row ${y} is empty and the furthest possible point`)
         //this is working nicely now
     
 
-        board[x][y] = [1]
-        return board[x][y]
+        board[x][y] = [1]; 
+        return [x, y]
         
         //working but looping twice
     } else {
       null
     }
-    
+    return [y,x]
   }
+  
   
 
 
@@ -109,8 +110,10 @@ function findSpotForCol(x) {
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
-function placeInTable(y, x) {
+function placeInTable(x, y) {
   // TODO: make a div and insert into correct table cell
+  let selectedCell = document.getElementById(`${x}-${y}`)
+  selectedCell.style.backgroundColor = "red";
 }
 
 /** endGame: announce game end */
@@ -130,9 +133,10 @@ function handleClick(evt) {
   console.log(evt.target)
   let columnSelected = evt.target.getAttribute('id')
   let toBeCoined = findSpotForCol(columnSelected);
-  console.log(toBeCoined)
+
   //we are identifying now the column selected by its ID attribute 
   //we will pass the column index into our findSpotForCol function
+  //placeInTable(findSpotForCol(columnSelected)[0], findSpotForCol(columnSelected)[1]);
   
 
 
@@ -147,7 +151,7 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  //placeInTable(y, x);
+  
 
   // check for win
   //if (checkForWin()) {
