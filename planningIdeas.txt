@@ -25,8 +25,89 @@ anndsee the CAPTION element) that provides a short description of the table's pu
 - a possible candidate
 
 A list of <div> elements?
-Also possible.
+Also possible. And a method I would feel more comfortable with, better for styling, margins, etc. 
+We would implement it via function via JS and forEach- document.createElement('div') potentially. 
+
 
 how could you represent a played-piece in the HTML board?
-let pieces = document.getElementsbyClass('piece') //nodelist
-i
+Using our DIV elements as parts of the playing grid, this could be a way, tested in dummy.html
+
+let pieces = document.getElementsByClassName("dummy")
+
+let firstPiece = pieces[0]
+
+firstPiece.style.backgroundColor = "Red"
+//this turned the background of our div element red. 
+//we could use the same logic to turn the background blue or red, or add an image of a circle (red or blue) into the div. 
+
+We would also have to handle the fact that the part is played to push the game further
+
+if(firstPiece.hasAttribute('checked')){
+    console.log('played piece')} - could work, but we are only checked if the attribute exists rather than if it is true. but if it is not played then 
+    the attribute would not be set. so this does work. 
+
+but then maybe better yet is we could do firstPiece.setAttribute('checked','red') //or blue
+then we can signal if it is checked, and by which player it has been played. 
+
+in the JavaScript, what would be a good structure for the in-memory game board?
+
+Potentially an object (game board) with subObjects (rows)
+but better yet maybe an array with sub arrays (iterable and therefore more accesible)
+An array, containing an array for each row present, array[0][0] - div 1 of row 1, array[0][1] div 2 of row one
+
+array[1][0] div one of row 2, and so on.... 
+
+This would work nicely eventually for the winning the game logic. 
+Lets try mockups of the conditional statements of each possible win 
+
+A vertical win
+
+when the coin drops 
+let i = event.target (supposed to map to the vertical/horizontal array which the coin falls)
+if (array[i][0].hasAttribute('red') && array[i + 1][0].hasAttribute('red') && array[i + 2][0] && array[i + 3][0]){
+    prompt('red has won the game!')
+}
+
+A horizontal win
+
+when the coin drops 
+let i = event.target (supposed to map to the vertical/horizontal array which the coin falls)
+if (array[0][i].hasAttribute('red') && array[0][i + 1].hasAttribute('red') && array[0][i + 2] && array[0][i + 3]){
+    prompt('red has won the game!')
+}
+
+
+A diagonal win
+
+when the coin drops 
+let i = event.target (supposed to map to the vertical/horizontal array which the coin falls)
+if (array[0][i].hasAttribute('red') && array[1][i + 1].hasAttribute('red') && array[2][i + 2] && array[3][i + 3]){
+    prompt('red has won the game!')
+    //for diagonal evaluation we move vertical one and horizontally one simultaniously. 
+}
+
+what might the flow of the game be?
+
+Well we will use odds and evens to determine which player is taking the turn 
+odd = red
+even = blue
+let turn = 1 (red)
+eachtime the coin drops 
+turn++
+if(turn % 2 === 0) turn will be blue and the styling of the div affected will be a blue circle image and the setAttribute will be
+a blue attribute..
+
+Then, write down some functions names/descriptions that would be useful for this game.
+
+whe we drop a coin in a column we need to check the furthest unfilled div. 
+
+our array of divs is an array of sub arrays(rows) therefore to iterate through or column we can do a for loop
+
+let updatingGameBoard = (event.target) => {
+for (let arr in array){
+    if(array[arr] === array[array.length - 1] || array[arr + 1].hasAttribute('currentcolour') == true){
+        array[arr].style.backgroundImage(=colourcircle);
+        array[arr].setAttribute('checked','current'colour)
+    }
+}
+}
