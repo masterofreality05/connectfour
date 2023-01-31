@@ -1,0 +1,32 @@
+How does a game of connect 4 work?
+
+Connect Four is played on a grid. 
+7 Wide by 6 deep. 7 x 6
+
+2 players, (red and blue)
+Alternating turns droppoing a piece of colour into the top of each column.
+The piece will fall to the first unoccupied slot.
+
+The game is won when a play makes four in a row,
+Horizontally, vertically or diagonally.
+The game is tied if the board is full and no winner. 
+
+Planning:
+
+What HTML would be useful for the game itself?
+A HTML table?
+
+"The HTML table model allows authors to arrange
+ data -- text, preformatted text, images,
+links, forms, form fields, other tables, etc. -- into rows
+and columns of cells. Each table may have an associated caption
+anndsee the CAPTION element) that provides a short description of the table's purpose."
+
+- a possible candidate
+
+A list of <div> elements?
+Also possible.
+
+how could you represent a played-piece in the HTML board?
+let pieces = document.getElementsbyClass('piece') //nodelist
+i
