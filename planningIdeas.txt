@@ -111,3 +111,11 @@ for (let arr in array){
     }
 }
 }
+
+Interlinked functions
+Makeboard() is independant 
+
+
+How the board is structured
+Each row is an array. iterable from 0 - 6 ()
+each row contains 7 cells, (array elements) 0 -6 
