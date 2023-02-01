@@ -109,8 +109,13 @@ function findSpotForCol(col,player) {
  //if we click column 1, we will pass the value of 0 to this function. 
  //what should we do with that? 
  //0 = the horizontal position, aka the column, how deep we go into the column is determined by what is not yet filled.
-console.log("running findSpot")
   for(let row = 0; row < HEIGHT; row++){
+
+    if(board[col][0] !== 0){
+      null
+      
+
+    } else {
     //we want to check its the furthest unchecked, or last vertical box.
     if (board[col][row + 1] !== 0 || row == HEIGHT -1){
     
@@ -127,7 +132,7 @@ console.log("running findSpot")
     } else {
       null
     }
-  
+    }
     
   
   }
@@ -139,14 +144,19 @@ console.log("running findSpot")
 
 function placeInTable(col, row, color) {
   // TODO: make a div and insert into correct table cell
+ try {
   let selectedCell = document.getElementById(`${row}-${col}`)
   selectedCell.style.backgroundColor = `${currPlayer}`;
+ } catch (error) {
+  console.log('The column is fulL!')
+  
+ } 
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
-  // TODO: pop up alert message
+  prompt(`${currPlayer} wins!`)
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -159,21 +169,26 @@ function handleClick(evt) {
   //a global variable (turnCounter) is incremented and determines if blue or red took the turn and loggs it to the console. 
   //this is also part of the 2 player turn logic.
   console.log(`${currPlayer} just added a coin`)
-  console.log(evt.target.getAttribute('id') + " is our target clicked")
+  //console.log(evt.target.getAttribute('id') + " is our target clicked")
   //with the get attribute method on our evt.target we can select the column number when clicked
   //if we pass this to our findSpotForCol function we can find the next available space for that particular column,
   let columnSelected = evt.target.getAttribute('id')
   console.log(columnSelected)
   //console.log(findSpotForCol(columnSelected) + "is our returned amount from find spot")
   placeInTable(columnSelected,findSpotForCol(columnSelected,currPlayer),currPlayer)
+  if(checkForWin() === true){
+    console.log("winnn")
+    endGame()
+  }
   //we are identifying now the column selected by its ID attribute 
   //we will pass the column index into our findSpotForCol function
   //placeInTable(findSpotForCol(columnSelected)[0], findSpotForCol(columnSelected)[1]);
 
   // get next spot in column (if none, ignore click)
   //var y = findSpotForCol(x);
-  //if (y === null) {
-    return;
+  //if (y === null)
+
+
   }
 
   // place piece in board and add to HTML table
@@ -210,23 +225,44 @@ function checkForWin() {
     );
   }
 
-  // TODO: read and understand this code. Add comments to help you.
+  /*TODO: read and understand this code. Add comments to help you.
+  I understand the majority of what goes on here, and in the planning stage at the start of the exercise I thought 
+   I would have to write it myself and here were my predictions, lets see how they compeare
+A vertical win
+
+when the coin drops 
+if (array[i][0].hasAttribute('red') && array[i + 1][0].hasAttribute('red') && array[i + 2][0] && array[i + 3][0]){
+    prompt('red has won the game!')
+}
+A horizontal win
+if (array[0][i].hasAttribute('red') && array[0][i + 1].hasAttribute('red') && array[0][i + 2] && array[0][i + 3]){
+    prompt('red has won the game!')
+}
+A diagonal win
+let i = event.target (supposed to map to the vertical/horizontal array which the coin falls)
+if (array[0][i].hasAttribute('red') && array[1][i + 1].hasAttribute('red') && array[2][i + 2] && array[3][i + 3]){
+    prompt('red has won the game!')
+}
+What I thought would be the case is that when we drop the coin we would have to account for vertical +1,+2,+3 and -1-2-3
+but it seems to not totally be the case, going to read and understand how this is working. 
+   */
 
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
-      var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      var vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      var diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
-      var diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
+      const vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+
 
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
     }
   }
+
+
 }
-
-
 makeBoard();
 makeHtmlBoard();
 
