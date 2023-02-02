@@ -128,7 +128,7 @@ function handleClick(evt) {
   //With this, we can find the next available space for that particular column.
 
   placeInTable(x,findSpotForCol(x,currPlayer),currPlayer)
-  if(checkForTie() == true){prompt("its a tie")}
+  if(checkForTie() == true){alert("its a tie")}
   if(checkForWin() === true){
     endGame()
   }
