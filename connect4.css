@@ -31,7 +31,6 @@ body
     margin-left:33%;
     margin-right:25%;
     align-content: center;
-    background-image: URL('background.jpeg');
 }
 
 #board {

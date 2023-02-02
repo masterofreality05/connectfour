@@ -1,18 +1,12 @@
 /*Connect Four
- 
  Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
- column until a player gets four-in-a-row (horiz, vert, or diag) or until
- board fills (tie)
- */
+ column until a player gets four-in-a-row (horiz, vert, or diag) or until board fills (tie)*/
 let WIDTH = 7;
 let HEIGHT = 6; //using let for both WIDTH and HEIGHT variables to use with Jasmine testing, checking edge cases. 
-let turnCounter = 1;
+let turnCounter = 1; //used in combination with our currPlayer
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
-let boardTestCopy = [];
-/* makeBoard: create in-JS board structure:
-board = array of rows, each row is array of cells  (board[y][x])
- */
+
 function makeBoard() {
 let row = []
 /*
@@ -65,42 +59,33 @@ function makeHtmlBoard() {
       //storing our tabledata in a variable named cell
       cell.setAttribute("id", `${y}-${x}`);
       /*each cell of our HTMLwill be accessible by document.getElementbyID('y-x') therefore we can access them individually.
-      this will be our secret weapon for our DOM manipulation. 
       important to note that Y is iterating over the HEIGHT variable and X the width. 
       Therefore with our HTML board y is the vertical position (0-5) and x is the horizontal (0-6)
       To make this responsive with our JS we need to make our board (array of arrays) reflect this somehow. */
       row.append(cell);
-      //lets add each cell to our row
     }
     htmlBoard.append(row);
  //lets add each row to our html board (HTML element with board ID)
   }
 }
-
 function findSpotForCol(col,player) {
-/*x is vertical and y is horizontal indexed x-y
- x will be passed in from the handleClick function x is the column, (horizontal index
-console.log(x + "testing") when we click a column  top the x access value is being passed to this function.
+/*x is vertical and y is horizontal indexed x-y, x will be passed in from the ClickHandler, via the event.target
 we want to loop through the rows(y axis values) of each column, to find the first empty cell. or if all empty then the last
-if we click column 1, we will pass the value of 0 to this function. 
-0 = the horizontal position, aka the column, how deep we go into the column is determined by what is not yet filled.*/
-
+if we click column 1, we will pass the value of 0 to this function. (indexed from 0) 
+0 = the horizontal position (the column) how deep we go into the column is determined by the following conditional*/
   for(let row = 0; row < HEIGHT; row++){
 
     if(board[col][0] !== 0){
       null
-      
     } else {
     //we want to check its the furthest unchecked, or last vertical box.
     if (board[col][row + 1] !== 0 || row == HEIGHT -1){
     
         //if board x (column) i (iterable vertical value) using loose equality
         console.log(`board ${col} row ${row} is empty and the furthest possible point`)
-        //this is working nicely now, 
         //conditions will update array if the one after it is full, or its the last spot. 
         board[col][row] = `${currPlayer}`;
         return row
-
     } else {
       null
     }
@@ -108,9 +93,7 @@ if we click column 1, we will pass the value of 0 to this function.
   }
   //return value is our x and y co-ordinates. 
 }
-/** placeInTable: update DOM to place piece into HTML table of board */
 function placeInTable(col, row, color) {
-  // TODO: make a div and insert into correct table cell (completed)
  try {
   let selectedCell = document.getElementById(`${row}-${col}`);
   let innerDiv = document.createElement('div');
@@ -119,12 +102,12 @@ function placeInTable(col, row, color) {
   selectedCell.appendChild(innerDiv)
  } catch (error) {
   console.log('The column is fulL!'); 
+  alert("the column is fulL! try another")
  };
 }
 function endGame(msg) {
-  prompt(`${currPlayer} wins!`);
+  alert(`${currPlayer} wins!`);
 }
-/** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
   // get x from ID of clicked cell
@@ -135,10 +118,9 @@ function handleClick(evt) {
   turnCounter++
   turnCounter % 2 === 1? currPlayer = 'red': currPlayer = 'blue';
   turnCounter % 2 === 1? turnKeep.innerText="Now Blue can drop a coin" : turnKeep.innerText = "Now Red can drop a coin"
-  //a global variable (turnCounter) is incremented and determines if blue or red took the turn and loggs it to the console. 
-  //this is also part of the 2 player turn logic.
-  //with the get attribute method on our evt.target we can select the column number when clicked
-  //if we pass this to our findSpotForCol function we can find the next available space for that particular column,
+  //a global variable (turnCounter) is incremented and determines if red or blue is up, facillitating the 2 player logic.
+  //We pass x (the id of evt.target clicked) to our findSpotForCol function 
+  //With this, we can find the next available space for that particular column.
 
   placeInTable(x,findSpotForCol(x,currPlayer),currPlayer)
   if(checkForTie() == true){prompt("its a tie")}
