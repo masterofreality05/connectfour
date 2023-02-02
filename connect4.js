@@ -101,8 +101,8 @@ function placeInTable(col, row, color) {
   innerDiv.style.backgroundColor = `${currPlayer}`;
   selectedCell.appendChild(innerDiv)
  } catch (error) {
-  console.log('The column is fulL!'); 
-  alert("the column is fulL! try another")
+  alert("The column is full! Try another");
+  
  };
 }
 function endGame(msg) {
@@ -110,12 +110,17 @@ function endGame(msg) {
 }
 
 function handleClick(evt) {
-  // get x from ID of clicked cell
   var x = +evt.target.id;
-  console.log(x)
-  // switch players
-  // TODO: switch currPlayer 1 <-> 2 (completed)
-  turnCounter++
+  // TODO: switch currPlayer 1 <-> 2 (completed) the conditional below will toggle between player 1 and 2, 
+  //if the column is full, the user will recieve and alert and the turnCounter will not increment, allowing the player to try agian.
+
+  if(board[x][0] !== 0){
+    null;
+  } else {
+    turnCounter++
+
+  }
+
   turnCounter % 2 === 1? currPlayer = 'red': currPlayer = 'blue';
   turnCounter % 2 === 1? turnKeep.innerText="Now Blue can drop a coin" : turnKeep.innerText = "Now Red can drop a coin"
   //a global variable (turnCounter) is incremented and determines if red or blue is up, facillitating the 2 player logic.
@@ -131,8 +136,6 @@ function handleClick(evt) {
   //we will pass the column index into our findSpotForCol function
   //placeInTable(findSpotForCol(columnSelected)[0], findSpotForCol(columnSelected)[1]);
   // get next spot in column (if none, ignore click)
-  //var y = findSpotForCol(x);
-  //if (y === null)
   }
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
@@ -144,16 +147,9 @@ function handleClick(evt) {
          return val !== 0;
      })
     })
-    //when the board is full we sucessfully receive the "its a tie" prompt.
+    //when the board is full we sucessfully receive the "its a tie" prompt. (tested and works)
   }
 
-  // TODO: check if all cells in board are filled; if so call, call endGame
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
-
- // check for win
-  //if (checkForWin()) {
-    //return endGame(`Player ${currPlayer} won!`);
-  //}
 function checkForWin() {
   function _win(cells) {
     // Check four cells to see if they're all color of current player
@@ -170,6 +166,7 @@ function checkForWin() {
   }
  /* I understand the majority of what goes on here, and in the planning stage at the start of the exercise I thought 
    I would have to write it myself and here were my predictions, lets see how they compeare
+
 A vertical win
 
 when the coin drops 
@@ -184,7 +181,7 @@ if (array[0][i].hasAttribute('red') && array[1][i + 1].hasAttribute('red') && ar
     prompt('red has won the game!')}
 What I thought would be the case is that when we drop the coin we would have to account for vertical +1,+2,+3 and -1-2-3
 but it seems to not totally be the case, going to read and understand how this is working. 
-   */
+*/
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
       const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
@@ -199,16 +196,14 @@ but it seems to not totally be the case, going to read and understand how this i
 
 }
 let gameReset = () => {
-console.log("resetting the game")
 for (let arr = 0; arr < board.length; arr++){
   for (let subArr = 0; subArr < board[arr].length; subArr++){
    
   board[arr][subArr] = 0;
-  //works to reset the JS array board
   for(let x = 0; x < WIDTH;x++){
     for(let y = 0; y < HEIGHT; y++){
     let selectedCell = document.getElementById(`${x}-${y}`);
-    selectedCell.style.backgroundColor = "White"
+    selectedCell.style.backgroundColor = "White";
 
     }
   }
