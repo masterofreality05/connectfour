@@ -16,10 +16,10 @@ board = array of rows, each row is array of cells  (board[y][x])
 function makeBoard() {
 let row = []
 /*
-for(let y = 0; y < WIDTH; y++){
+for(let y = 0; y < HEIGHT; y++){
   row.push(0)
 }
-for(let x = 0; x < HEIGHT; x++){
+for(let x = 0; x < WIDTH; x++){
   board.push(row)
 
 With my original board impl as the row was not declared within the loop, we pushed 0 to the row each time correctly
@@ -27,13 +27,13 @@ however we ended up pushing the same row array reference each time to the board.
 essentially it would update every array of board each time. I leave it here for now as I learnt a valuable lesson. 
 */
 for(let y = 0; y < WIDTH; y++){
-/*for each incremental value of HEIGHT, we redeclare a new row (hopefully altering its reference)
+/*for each incremental value of WIDTH, we redeclare a new array of the board 
 if we were to declare the row outside of a loop, we would not create a new one each time and therefore would reference the same
 each time, meaning if we were to reassignwe would update the same row element in every row. (which was my problem before)
   */
   let row = [];
   for(let x = 0; x < HEIGHT; x++){
-    //for now we loop through the iterable WIDTH on each row, and for each incremental value of WIDTH we push an empty array(cell)
+    //for now we loop through the value of HEIGHT of each column, and for each incremental value of WIDTH we push an empty array(cell)
     //into our row (created freshly with each outer for loop
     row.push(0)
   }

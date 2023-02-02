@@ -14,7 +14,6 @@
   height: 80%;
   border-radius: 50%;
   
-  
 }
 /* TODO: make pieces red/blue,  depending on player 1/2 piece (completed) */ 
 /* column-top is table row of clickable areas for each column */
@@ -32,4 +31,10 @@ body
     margin-left:33%;
     margin-right:25%;
     align-content: center;
+    background-image: URL('background.jpeg');
+}
+
+#board {
+  position: relative;
+
 }
