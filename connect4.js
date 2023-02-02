@@ -82,7 +82,7 @@ if we click column 1, we will pass the value of 0 to this function. (indexed fro
     if (board[col][row + 1] !== 0 || row == HEIGHT -1){
     
         //if board x (column) i (iterable vertical value) using loose equality
-        console.log(`board ${col} row ${row} is empty and the furthest possible point`)
+        
         //conditions will update array if the one after it is full, or its the last spot. 
         board[col][row] = `${currPlayer}`;
         return row
@@ -133,9 +133,7 @@ function handleClick(evt) {
     endGame()
   }
   //we are identifying now the column selected by its ID attribute 
-  //we will pass the column index into our findSpotForCol function
-  //placeInTable(findSpotForCol(columnSelected)[0], findSpotForCol(columnSelected)[1]);
-  // get next spot in column (if none, ignore click)
+  //we will pass the column index into our findSpotForCol function to get next spot in column (if none, ignore click)
   }
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
@@ -198,15 +196,19 @@ but it seems to not totally be the case, going to read and understand how this i
 let gameReset = () => {
 for (let arr = 0; arr < board.length; arr++){
   for (let subArr = 0; subArr < board[arr].length; subArr++){
+
    
   board[arr][subArr] = 0;
-  for(let x = 0; x < WIDTH;x++){
-    for(let y = 0; y < HEIGHT; y++){
-    let selectedCell = document.getElementById(`${x}-${y}`);
-    selectedCell.style.backgroundColor = "White";
-
-    }
   }
+  
+
+  
+}
+
+for(let x = 0; x < HEIGHT;x++){
+  for(let y = 0; y < WIDTH; y++){
+  let selectedCell = document.getElementById(`${x}-${y}`);
+  selectedCell.innerHTML =""
 
   }
 }
