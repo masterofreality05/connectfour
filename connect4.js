@@ -1,8 +1,8 @@
-/** Connect Four
- *
- * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
- * column until a player gets four-in-a-row (horiz, vert, or diag) or until
- * board fills (tie)
+/*Connect Four
+ 
+ Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
+ column until a player gets four-in-a-row (horiz, vert, or diag) or until
+ board fills (tie)
  */
 let WIDTH = 6;
 let HEIGHT = 6; //using let for both WIDTH and HEIGHT variables to use with Jasmine testing, checking edge cases. 
@@ -10,7 +10,7 @@ let turnCounter = 1;
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 /* makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
+board = array of rows, each row is array of cells  (board[y][x])
  */
 function makeBoard() {
 let row = []
@@ -24,7 +24,7 @@ for(let x = 0; x < HEIGHT; x++){
 this code was passing the same subarr reference of "row" to each array element of board
 we declared let row at the start of the function, then added sub array elements
 and for each incrememntal value of WIDTH we pushed row over and over, the 'same array'
-now solved with a nested Loop. but why?
+now solved with a nested Loop. 
 */
 for(let y = 0; y < HEIGHT; y++){
 /*for each incremental value of HEIGHT, we redeclare a new row (hopefully altering its reference)
@@ -37,8 +37,7 @@ each time, meaning if we were to reassignwe would update the same row element in
     //into our row (created freshly with each outer for loop
     row.push(0)
   }
-  //still in the outer loop but after each inner for loop completes (full amount of iterations) we will push our fully formed
-  //row to the board
+  //still in the outer loop but after each inner for loop completes (full amount of iterations) we will push our fully formed row to the board
   board.push(row)
 }
 //then we return the board from our makeBoardFunction. 
@@ -46,11 +45,9 @@ each time, meaning if we were to reassignwe would update the same row element in
 }
 
 function makeTestJSBoard(){
-
 }
 
 function makeHtmlBoard() {
-
   const htmlBoard = document.getElementById('board'); //completed
  
   // TODO: add comment for this code
@@ -65,7 +62,6 @@ function makeHtmlBoard() {
     top.append(headCell);
   }
   htmlBoard.append(top);
-
   // TODO: add comment for this code
   //here we are building the game itself in the HTML markup, where as the top row (variable top) is used to add coins. 
   //implemented with a event listener, and an clickHandler function. 
@@ -153,7 +149,7 @@ function handleClick(evt) {
   //if we pass this to our findSpotForCol function we can find the next available space for that particular column,
 
   placeInTable(x,findSpotForCol(x,currPlayer),currPlayer)
-  if(checkForTie === true){prompt("its a tie")}
+  if(checkForTie() == true){prompt("its a tie")}
   if(checkForWin() === true){
     endGame()
   }
@@ -168,9 +164,15 @@ function handleClick(evt) {
   // TODO: add line to update in-memory board
   // check for tie (yet to do )
   let checkForTie = () => {
-    for(let arrs of board){
-      return arrs.every(val => val !== 0)
-    }
+
+
+    return board.every(val => {
+     return val.every(val => {
+         return val !== 0;
+     })
+    })
+    //when the board is full we sucessfully receive the "its a tie" prompt.
+   
     
   }
 
@@ -195,8 +197,7 @@ function checkForWin() {
         board[y][x] === currPlayer
     );
   }
-  /*TODO: read and understand this code. Add comments to help you.
-  I understand the majority of what goes on here, and in the planning stage at the start of the exercise I thought 
+ /* I understand the majority of what goes on here, and in the planning stage at the start of the exercise I thought 
    I would have to write it myself and here were my predictions, lets see how they compeare
 A vertical win
 
@@ -232,11 +233,36 @@ but it seems to not totally be the case, going to read and understand how this i
 
 }
 
+let gameReset = () => {
+console.log("resetting the game")
+for (let arr = 0; arr < board.length; arr++){
+  for (let subArr = 0; subArr < board[arr].length; subArr++){
+   
+  board[arr][subArr] = 0;
+  //works to reset the JS array board
+  for(let x = 0; x < WIDTH;x++){
+    for(let y = 0; y < HEIGHT; y++){
+    let selectedCell = document.getElementById(`${x}-${y}`);
+    selectedCell.style.backgroundColor = "White"
+
+    }
+  }
+
+  
+  }
+}
+}
+
 let turnKeep = document.createElement('h1')
 
-document.body.append(turnKeep)
+
 turnKeep.innerText = `drop a coin to start the game!`;
 
+let reset = document.createElement('button')
+reset.innerText = "Reset Game"
+document.body.append(turnKeep)
+document.body.append(reset)
+reset.addEventListener('click', gameReset)
 makeBoard();
 makeHtmlBoard();
 
