@@ -4,7 +4,7 @@
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
-let WIDTH = 7;
+let WIDTH = 6;
 let HEIGHT = 6; //using let for both WIDTH and HEIGHT variables to use with Jasmine testing, checking edge cases. 
 let turnCounter = 1;
 let currPlayer = 1; // active player: 1 or 2
@@ -45,6 +45,10 @@ each time, meaning if we were to reassignwe would update the same row element in
   return board
 }
 
+function makeTestJSBoard(){
+
+}
+
 function makeHtmlBoard() {
 
   const htmlBoard = document.getElementById('board'); //completed
@@ -72,6 +76,7 @@ function makeHtmlBoard() {
       //in each row we will add our cells depending on the value of width
       const cell = document.createElement("td");
       //storing our tabledata in a variable named cell
+      cell.classList.add('piece')
       cell.setAttribute("id", `${y}-${x}`);
       //each cell of our HTMLwill be accessible by document.getElementbyID('y-x') therefore we can access them individually.
       //this will be our secret weapon for our DOM manipulation. 
@@ -85,6 +90,7 @@ function makeHtmlBoard() {
     //lets add each row to our html board (HTML element with board ID)
   }
 }
+
 function findSpotForCol(col,player) {
   //x is vertical and y is horizontal indexed x-y
   //x will be passed in from the handleClick function x is the column, (horizontal index
@@ -135,17 +141,19 @@ function endGame(msg) {
 function handleClick(evt) {
   // get x from ID of clicked cell
   var x = +evt.target.id;
+  console.log(x)
   // switch players
   // TODO: switch currPlayer 1 <-> 2 (completed)
   turnCounter++
   turnCounter % 2 === 1? currPlayer = 'red': currPlayer = 'blue';
+  turnCounter % 2 === 1? turnKeep.innerText="now Blue can drop a coin" : turnKeep.innerText = "now Red can drop a coin"
   //a global variable (turnCounter) is incremented and determines if blue or red took the turn and loggs it to the console. 
   //this is also part of the 2 player turn logic.
-  console.log(`${currPlayer} just added a coin`);
   //with the get attribute method on our evt.target we can select the column number when clicked
   //if we pass this to our findSpotForCol function we can find the next available space for that particular column,
 
   placeInTable(x,findSpotForCol(x,currPlayer),currPlayer)
+  if(checkForTie === true){prompt("its a tie")}
   if(checkForWin() === true){
     endGame()
   }
@@ -160,7 +168,12 @@ function handleClick(evt) {
   // TODO: add line to update in-memory board
   // check for tie (yet to do )
   let checkForTie = () => {
+    for(let arrs of board){
+      return arrs.every(val => val !== 0)
+    }
+    
   }
+
   // TODO: check if all cells in board are filled; if so call, call endGame
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
@@ -218,6 +231,12 @@ but it seems to not totally be the case, going to read and understand how this i
   }
 
 }
+
+let turnKeep = document.createElement('h1')
+
+document.body.append(turnKeep)
+turnKeep.innerText = `drop a coin to start the game!`;
+
 makeBoard();
 makeHtmlBoard();
 
