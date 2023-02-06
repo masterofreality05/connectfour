@@ -4,11 +4,11 @@
 let WIDTH = 7;
 let HEIGHT = 6; //using let for both WIDTH and HEIGHT variables to use with Jasmine testing, checking edge cases. 
 let turnCounter = 1; //used in combination with our currPlayer
-let currPlayer = 1; // active player: 1 or 2
+let currPlayer = "red"; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
-let row = []
+
 /*
 for(let y = 0; y < HEIGHT; y++){
   row.push(0)
@@ -76,7 +76,7 @@ if we click column 1, we will pass the value of 0 to this function. (indexed fro
   for(let row = 0; row < HEIGHT; row++){
 
     if(board[col][0] !== 0){
-      null
+      return
     } else {
     //we want to check its the furthest unchecked, or last vertical box.
     if (board[col][row + 1] !== 0 || row == HEIGHT -1){
@@ -128,8 +128,9 @@ function handleClick(evt) {
   //With this, we can find the next available space for that particular column.
 
   placeInTable(x,findSpotForCol(x,currPlayer),currPlayer)
-  if(checkForTie() == true){alert("its a tie")}
-  if(checkForWin() === true){
+  if(checkForTie()){
+    alert("its a tie")}
+  if(checkForWin()){
     endGame()
   }
   //we are identifying now the column selected by its ID attribute 
@@ -201,20 +202,17 @@ for (let arr = 0; arr < board.length; arr++){
   board[arr][subArr] = 0;
   }
   
-
-  
 }
 
 for(let x = 0; x < HEIGHT;x++){
   for(let y = 0; y < WIDTH; y++){
   let selectedCell = document.getElementById(`${x}-${y}`);
-  selectedCell.innerHTML =""
+  selectedCell.innerHTML ="" //null
 
   }
 }
 }
 let turnKeep = document.createElement('h1') //a header element notifying the players who is up next
-
 
 turnKeep.innerText = `drop a coin to start the game!`;
 //creating reset button on the DOM

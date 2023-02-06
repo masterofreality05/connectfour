@@ -1,0 +1,63 @@
+The structure of our JS file is following beginning middle and end 
+ and ending Starting with global variable declaration. 
+
+Making the JS board (an array containing sub arrays)
+Making the HTML board to visually represent it. 
+The event listener that will trigger our click handkler that will progress through the game will be implemented now. 
+
+We want to know what to do when the click handler of the event listener is called, so lets declare its componenets. 
+
+Then the components of the click handler function are, Find the vacant space (HEIGHT) of the selected column,
+occupy,the vacant space with a dynamically selected player piece and updating the board variable in JS. 
+Then finally we declare the final component of the handler is that if theres a winner to be declared, its time to
+ celebrate. 
+
+The players start clicking and adding pieces of the colour. this fills up our JS board, which is being updated by 
+each cell filled with the 
+value of currPlayer at the time. Currplayer is a binary based conditional, of blue and red, and toggles via a modulo 
+conditional statement, identified
+from our turncounter integer variable. it increments each time, therefore swaps from odd to even, red to blue. 
+
+the value of our toggling currplayer is used to inform the colour of the piece div that gets added to each html 
+square. 
+With eveery click we check for a tie, if all squares all filled.
+or for a win (if 4 has been connected)
+
+How do we do that?
+
+Check for a tie function will return true if every individual cell of our JS board is not 0, in otherwords 
+if its been altered from its original 0
+implementation.
+
+Check for a win function finds the colour of the last selected button, via the currPlayer variable, toggled
+ red or blue. 
+It then evaluates if a vertical, horizontal, diagonal left or right 0-1-2-3 4 in a row is valid.
+If so we alert the winner and the celebrations begin. 
+
+Game reset works as a loop that iterates over the JS board and resets all the values to 0.
+Also being using string interpolation we can identify the selected div of each and remove their innerHTML
+ markup of the piece div. 
+
+Questions: The best way to implement a play against the computer option?
+If we use Math.Random to find a horizontal co-ordinate our findSpace function will find the next available
+ space.
+So this is one way to do it, but how to add more considered gameplay of the computer and some sophistication
+ to the computers playing skills?
+
+I had made tests for this project, but I removed them for varying reasons, One example:
+To test the implementation of the JS board. as it is made dynamically depending on the values
+ of the HEIGHT and WIDTH variables, 
+To make sure the board variable that is made as part of the creator function was accurute. 
+
+Without the correct teardown logic, I ended up with a JS board twice the size, created
+Then for the purpose of testing, implemented can additional time and pseudo appended onto it,
+ AKA 6 became 12. 
+What would be appropriate teardown logic to use at the end our Jasmine test in this case?
+I want to remove the second (test) rows of my board after meeting the required output. 
+
+
+
+
+
+
+
