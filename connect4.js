@@ -50,10 +50,10 @@ function makeHtmlBoard() {
   htmlBoard.append(top);
   /*here we are building the game itself in the HTML markup, where as the top row (variable top) is used to add coins. 
   implemented with a event listener, and an clickHandler function. */
-  for (var y = 0; y < HEIGHT; y++) {
+  for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     //for each incremental value of HEIGHT we will add a table row. 
-    for (var x = 0; x < WIDTH; x++) {
+    for (let x = 0; x < WIDTH; x++) {
       //in each row we will add our cells depending on the value of width
       const cell = document.createElement("td");
       //storing our tabledata in a variable named cell
@@ -86,9 +86,7 @@ if we click column 1, we will pass the value of 0 to this function. (indexed fro
         //conditions will update array if the one after it is full, or its the last spot. 
         board[col][row] = `${currPlayer}`;
         return row
-    } else {
-      null
-    }
+    } 
     }
   }
   //return value is our x and y co-ordinates. 
